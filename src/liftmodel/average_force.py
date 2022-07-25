@@ -22,7 +22,7 @@ class AverageForce:
 		return alpha
 		
 	def _getGeomAngles(self):
-		return self._force._lifting_line._ALPHA
+		return self._force.lifting_line.getGeomAngle()
 
 	# --- Public
 	
@@ -53,7 +53,7 @@ class AverageForce:
 		def rootFunc(x):
 			[adv_ratio, alpha_root] = x
 			fup = lambda x: twist_up(x) + alpha_root
-			fdown = lambda x: twist_down(x) + alpha_root                # pre-calculate twist values to solver faster
+			fdown = lambda x: twist_down(x) + alpha_root                           # pre-calculate twist values to solver faster
 				# find averages		
 			self.solveCoefficients(fup, fdown, adv_ratio)
 			cy_av, cx_av = self._average_coeff[0:2]
@@ -63,16 +63,16 @@ class AverageForce:
 		
 	def solveAdvanceRatio_LD(self, ld_glide, twist_up, twist_down):
 		cy_glide, cx_glide = self._glide_coeff[0:2]
-		cx_parasitic = cy_glide / ld_glide + cx_glide                  # counter parasitic drag from body
+		cx_parasitic = cy_glide / ld_glide + cx_glide                               # counter parasitic drag from body
 		return self.solveAdvanceRatio(cy_glide, cx_parasitic, twist_up, twist_down)
 
 	# - Getter functions
 		
 	def getYaxis(self):
-		return self._force._lifting_line._Y
+		return self._force.lifting_line.getSpanAxis()
 				
 	def getChord(self):
-		return self._force._lifting_line._CHORD
+		return self._force.lifting_line.getChord()
 				
 	def getCirculations(self):
 		return self._gamma_glide, self._gamma_up, self._gamma_down

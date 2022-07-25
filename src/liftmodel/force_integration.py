@@ -3,12 +3,12 @@ import numpy as np
 from scipy.integrate import trapezoid
 
 # module
-from src.liftmodel.lifting_line import LiftingLine
+from src.liftmodel.lifting_line_matrix import LiftingLine
 
 class ForceIntegration:
 	def __init__(self, N, chord_ratio, twist, advance_ratio=0):
 		self._advance_ratio = advance_ratio
-		self._lifting_line = LiftingLine(N, chord_ratio, self._geomAngle(twist), self._velRatio)
+		self.lifting_line = LiftingLine(N, chord_ratio, self._geomAngle(twist) )
 		
 	# --- Private
 		
@@ -25,12 +25,11 @@ class ForceIntegration:
 		
 	def setTwist(self, twist, advance_ratio):
 		self._advance_ratio = advance_ratio
-		self._lifting_line.setGeomAngle( self._geomAngle(twist) )
-		self._lifting_line.setVelRatio( self._velRatio )
+		self.lifting_line.setGeomAngle( self._geomAngle(twist) )
 		
 	def integrateCoefficients(self):		
 			# solve lift
-		[gamma, alphai, y] = self._lifting_line.solveCirculation()
+		[gamma, alphai, y] = self.lifting_line.solveCirculation()
 			# airflow angle
 		theta = self._velAngle(y) + alphai	
 		cos_theta = np.cos(theta)

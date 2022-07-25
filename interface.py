@@ -11,7 +11,7 @@ from src.format_data import formatData
                                                         #           local wing chord divided by wing span - defines shape of the wing. 
 def chord_ratio(x):					
 	return (1 - x**2)**0.5 * (4/(PI*12))
-                                                        # deg       glide twist angle at a given dimensionless spanwise position. 
+                                                        # deg       glide twist angle at a given dimensionless spanwise position. x=1 is tip
 def twist_glide(x):
 	return 5
 		
@@ -27,13 +27,13 @@ def twist_down(x):
 # =========== design parameters ==============
                                 # units     # description
 # integration steps
-n_step      = 41                #           number of wingspan subdivisions to calculate lift. Larger number slows down calculations
+n_step      = 201               #           number of wingspan subdivisions to calculate lift. Larger number slows down calculations
 # flight parameters
 amplitude   = 55                # deg       flapping amplitude
 dihedral    = 2.5               # deg       average dihedral angle
 ld_ratio    = 4                 # %         lift to drag ratio of entire aircraft
 gravity     = 9.81              # m/^2      acceleration due to gravity 
-mass_total  = 0.30              # kg        total mass of the aircraft
+mass_total  = 300e-3            # kg        total mass of the aircraft
 mass_wing   = 52e-3             # kg        mass of both half wingspans
 air_density = 1.204             # kg/m^3    density of atmosphere
 area        = 0.110             # m^2       area of entire wing

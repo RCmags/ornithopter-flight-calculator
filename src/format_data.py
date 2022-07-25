@@ -211,7 +211,7 @@ def outputToDegree(input, output):
 	output['SPRING']['spring_angle']     = np.degrees( output['SPRING']['spring_angle'] )
 	return input, output
 
-def formatData(input):          # convert inputs and outputs to degrees
+def formatData(input):		# convert inputs and outputs to degrees
 	input = labelInputs(*input)
 	input = inputToRadian(input)
 	output = aircraftCalculations( *input.values() )
