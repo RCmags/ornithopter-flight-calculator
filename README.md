@@ -22,12 +22,12 @@ If you are using windows, you can simply double click interface.py and to open i
 To adjust the calculations, open interface.py with a text editor and change the input variables. These include wing twist as a function of the wingspan, air density, motor voltage, and many other parameters. 
 
 ### References
-1. The aerodynamic forces are calculated using lifting line theory as explained in the paper [Aerodynamic modeling of flapping flight using lifting line theory](https://www.researchgate.net/publication/275314369_Aerodynamic_modelling_of_flapping_flight_using_lifting_line_theory) by Bhowmik et al.   
+1. The aerodynamic forces are calculated according to the paper ["Aerodynamic modeling of flapping flight using lifting line theory"](https://www.researchgate.net/publication/275314369_Aerodynamic_modelling_of_flapping_flight_using_lifting_line_theory) by Bhowmik et al.   
 
 
-2. The motor is modeled as an inductor and resistor subject to a constant voltage source and a back emf proportional to the angular velocity. The model is explained in the article [First-Order DC Electric Motor Model](https://web.mit.edu/drela/Public/web/qprop/motor1_theory.pdf) by Mark Drella.  
+2. The motor is modeled as an inductor and resistor subject to a constant voltage source and a back emf proportional to the angular velocity. The model is explained in the article ["First-Order DC Electric Motor Model"](https://web.mit.edu/drela/Public/web/qprop/motor1_theory.pdf) by Mark Drella.  
   
   
-3. The book [How ornithopter fly](http://www.ornithopter.de/english/handbook.htm) by Horst Räbiger was used as a guide to perform the aformentioned calculations. 
+3. The book ["How ornithopters fly"](http://www.ornithopter.de/english/handbook.htm) by Horst Räbiger was used as a guide to perform the aformentioned calculations. 
 - [Original German text](http://www.ornithopter.de/daten/handbuch.pdf)
 - [French translation](http://www.ornithopter.de/francais/donnees/manuel.pdf) (this version was used)
