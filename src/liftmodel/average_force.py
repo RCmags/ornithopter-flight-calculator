@@ -53,7 +53,7 @@ class AverageForce:
 		def rootFunc(x):
 			[adv_ratio, alpha_root] = x
 			fup = lambda x: twist_up(x) + alpha_root
-			fdown = lambda x: twist_down(x) + alpha_roo                # pre-calculate twist values to solver faster
+			fdown = lambda x: twist_down(x) + alpha_root                # pre-calculate twist values to solver faster
 				# find averages		
 			self.solveCoefficients(fup, fdown, adv_ratio)
 			cy_av, cx_av = self._average_coeff[0:2]
