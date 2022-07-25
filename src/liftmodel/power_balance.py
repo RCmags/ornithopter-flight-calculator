@@ -106,7 +106,7 @@ class PowerBalance:
 	def _climbPower(self, weight, vel, power_max, power_flight, power_inertia):
 		# power for thrust
 		power_thrust     = power_flight - power_inertia
-		power_thrust_new = power_max - power_inertia*(power_max/power_flight)**(3/2)	# constant amplitude
+		power_thrust_new = power_max - power_inertia*(power_max/power_flight)**(3/2)    # constant amplitude
 		power_excess     = power_thrust_new - power_thrust
 		# climb rate			
 		climb_rate  = power_excess / weight			

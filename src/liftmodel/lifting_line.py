@@ -11,15 +11,15 @@ class LiftingLine:
 		self._N = n
 		self._INDEX = np.arange(n)
 			# generate grid
-		self._Y = np.linspace(-PI/2, PI/2, num=n)	# half revolution
-		self._X = self._Y[0:-1] + 0.5*PI/(n-1)		# midpoints
+		self._Y = np.linspace(-PI/2, PI/2, num=n)   # half revolution
+		self._X = self._Y[0:-1] + 0.5*PI/(n-1)      # midpoints
 			# map to sine
 		self._Y = np.sin(self._Y)
 		self._X = np.sin(self._X)
 			# user defined functions, f(x)
-		self.setChord(chord_ratio)					# Ratio between element chord and wing span: chord(y) / wingspan
-		self.setGeomAngle(geom_angle)				# Geometric angle of attack
-		self.setVelRatio(vel_ratio)					# Ratio of element velocity to velocity at infinity: Velocity(y) / Vinf
+		self.setChord(chord_ratio)                  # Ratio between element chord and wing span: chord(y) / wingspan
+		self.setGeomAngle(geom_angle)               # Geometric angle of attack
+		self.setVelRatio(vel_ratio)                 # Ratio of element velocity to velocity at infinity: Velocity(y) / Vinf
 						
 	# -- Private				
 	

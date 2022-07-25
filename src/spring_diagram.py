@@ -3,10 +3,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 # constants
-MID  = 49			# middle index of angle steps 
-NUM  = 1 + 2*MID  	# number of angle steps
-FREQ = 20			# number of sine wave peaks
-LEN_RATIO = 0.4		# relative length of spring 
+MID  = 49           # middle index of angle steps 
+NUM  = 1 + 2*MID    # number of angle steps
+FREQ = 20           # number of sine wave peaks
+LEN_RATIO = 0.4     # relative length of spring 
 
 # functions
 

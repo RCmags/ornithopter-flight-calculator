@@ -42,7 +42,7 @@ class ForceIntegration:
 		gamma_y = gamma_vel * cos_theta
 		gamma_z = gamma_y * np.abs(y)	
 			# force coefficients
-		cy = trapezoid(gamma_y, y)			# force = 0.5 * p * Vinf^2 * Area * coeff
+		cy = trapezoid(gamma_y, y)          # force = 0.5 * p * Vinf^2 * Area * coeff
 		cx = trapezoid(gamma_x, y)
-		ct = trapezoid(gamma_z, y) * 0.5	# torque = 0.5 * p * Vinf^2 * Area * span * coeff
+		ct = trapezoid(gamma_z, y) * 0.5    # torque = 0.5 * p * Vinf^2 * Area * span * coeff
 		return cy, cx, ct, gamma, alphai, y
