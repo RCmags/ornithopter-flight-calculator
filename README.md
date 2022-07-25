@@ -1,5 +1,4 @@
 # Ornithopter flight calculator - v1.0
----
 
 This program calculates various flight parameters for an ornithopter in level flight. The aircraft is modeled as a single set of wings that generate a certain amount of lift and thrust. We estimate the mechanical power required for flight and the electrical power drawn by an electric motor. The lift during gliding flight is also used to estimate the strength of a spring needed to keep the wings from collapsing.
 

@@ -66,7 +66,7 @@ class PowerBalance:
 		         ,'wing_radius'      : radius	     \
 		         ,'wing_root_chord'  : chord         \
 		         ,'frequency'        : freq          \
-		         ,'velocity'         : vel 	         \
+		         ,'velocity'         : vel           \
 		         ,'torque_glide'     : torque_glide  \
 		         ,'torque_max'       : torque_max    \
 		         ,'force_lift'       : lift          \
