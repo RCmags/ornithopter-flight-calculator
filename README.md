@@ -10,6 +10,7 @@ __NOTE__: this version uses a non-linear root solver to find the lift distributi
 ### Requirements
 The scripts were written in [Python 3.9.5](https://www.python.org/downloads/) and requires the following libraries: 
 - [numpy](https://numpy.org/install/)
+- [scipy](https://scipy.org/install/)
 - [matplotlib](https://matplotlib.org/stable/users/installing/index.html) 
 
 ### How to use
