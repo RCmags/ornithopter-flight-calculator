@@ -34,7 +34,7 @@ dihedral    = 2.5               # deg       average dihedral angle
 ld_ratio    = 4                 # %         lift to drag ratio of entire aircraft
 gravity     = 9.81              # m/^2      acceleration due to gravity 
 mass_total  = 0.30              # kg        total mass of the aircraft
-mass_wing   = 52/1e3            # kg        mass of both half wingspans
+mass_wing   = 52e-3             # kg        mass of both half wingspans
 air_density = 1.204             # kg/m^3    density of atmosphere
 area        = 0.110             # m^2       area of entire wing
 # motor properties
