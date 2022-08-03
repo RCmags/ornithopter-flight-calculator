@@ -31,3 +31,84 @@ To adjust the calculations, open interface.py with a text editor and change the 
 3. The book ["How ornithopters fly"](http://www.ornithopter.de/english/handbook.htm) by Horst Räbiger was used as a guide to perform the aformentioned calculations. 
 - [Original German text](http://www.ornithopter.de/daten/handbuch.pdf)
 - [French translation](http://www.ornithopter.de/francais/donnees/manuel.pdf) (this version was used)
+
+### Sample output
+```
+==========================================
+                  INPUTS                  
+==========================================
+FLIGHT                                    
+------------------------------------------
+lift_drag_ratio       4.000          %    
+amplitude             55.000         deg  
+dihedral              2.500          deg  
+gravity               9.810          m/s^2
+mass_total            0.300          kg   
+mass_wing             0.052          kg   
+air_density           1.204          kg/m^3
+area                  0.110          m^2  
+
+MOTOR                                     
+------------------------------------------
+voltage               11.100         V    
+current_stall         6.000          A    
+current_noload        0.500          A    
+motor_resistance      0.010          ohm  
+motor_kv              3100.000       rpm/V
+throttle              1.000          %    
+
+SPRING                                    
+------------------------------------------
+xoffset               -0.010         m    
+yoffset               0.080          m    
+radius_spring         0.050          m    
+
+==========================================
+                 OUTPUTS                  
+==========================================
+FLIGHT                                    
+------------------------------------------
+power_mechanical      12.361         W    
+power_aerodynamic     8.151          W    
+power_inertial        4.210          W    
+power_minimum         7.155          W    
+eff_aerodynamic       0.878          %    
+eff_mechanical        0.579          %    
+wing_radius           0.574          m    
+wing_root_chord       0.122          m    
+frequency             5.998          hz   
+velocity              9.725          m/s  
+torque_glide          0.359          N.m  
+torque_max            0.677          N.m  
+force_lift            2.943          N    
+force_thrust          0.736          N    
+pitch_trim_angle      0.264          deg  
+
+MOTOR                                     
+------------------------------------------
+coeff_power           0.742          %    
+coeff_angvel          0.754          %    
+efficiency_motor      0.689          %    
+power_electric_input  17.933         W    
+power_max_output      16.650         W    
+current_motor         1.616          A    
+gear_ratio            72.071         %    
+
+CLIMB                                     
+------------------------------------------
+climb_rate            0.652          m/s  
+climb_angle           3.842          deg  
+
+SPRING                                    
+------------------------------------------
+spring_constant       411.314        N/m  
+spring_force          8.615          N    
+length_change         0.037          m    
+spring_angle          56.389         deg
+```
+
+![image](https://raw.githubusercontent.com/RCmags/rcmags.github.io/main/img/orni_calculator/lift_distribution.png)
+
+![image](https://raw.githubusercontent.com/RCmags/rcmags.github.io/main/img/orni_calculator/wing_geometry.png)
+
+![image](https://raw.githubusercontent.com/RCmags/rcmags.github.io/main/img/orni_calculator/spring_geometry.png)
