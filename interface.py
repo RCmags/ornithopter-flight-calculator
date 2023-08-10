@@ -10,14 +10,13 @@ from src.format_data import formatData
                                                         # units     # description:
                                                         #           local wing chord divided by wing span - defines shape of the wing. 
 def chord_ratio(x):					
-	return ( 1 - np.abs(x)*0.5 ) / 7
+	return (1 - x**2)**0.5 * (4/(PI*12))
                                                         # deg       glide twist angle at a given dimensionless spanwise position. x=1 is tip
 def twist_glide(x):
 	return 5
 		
 def twist(x):
-	x = np.abs(x)
-	return np.arctan( 6 * x ) * 12
+	return np.arctan( 0.6 * np.abs(x) ) * 180 / PI
                                                         # deg       upstroke twist angle at a given dimensionless spanwise position. 
 def twist_up(x):
 	return twist_glide(x) + twist(x)
@@ -41,7 +40,7 @@ area        = 0.110             # m^2       area of entire wing
 # motor properties
 motor_kv    = 3100              # rpm/volt  rpm for every volt fed to the motor
 voltage     = 3.7*3             # volt      voltage source of motor
-i_stall     = 6 * (3/2)         # amp       stall current of motor
+i_stall     = 6                 # amp       stall current of motor
 i_noload    = 0.5               # amp       no-load current of motor
 # spring geometry
 xoffset     = -10e-3            # m         horizontal offset of wing shoulder
