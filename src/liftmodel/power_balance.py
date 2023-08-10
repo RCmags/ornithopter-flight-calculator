@@ -14,10 +14,11 @@ class PowerBalance:
 		self._AMPLITUDE = amplitude 
 		self._DIHEDRAL  = dihedral
 		# inertia
-		area_moment_0 = quad(chord_ratio, -1, 1)[0]
-		area_moment_2 = quad(chord_ratio, -1, 1)[0]
+		area_moment_0 = quad(chord_ratio, 0, 1)[0]
+		area_moment_2 = quad( lambda x: chord_ratio(x)*(x**2), 0, 1)[0]
 		self._CONST_SPAN = 0.5 / area_moment_0
-		self._CONST_INERTIA_MASS = 0.25 * area_moment_2 / area_moment_0 		
+		self._CONST_INERTIA_MASS = area_moment_2 / area_moment_0 
+				
 		# other
 		self._CONST_FREQ = np.sqrt(2)/( PI * amplitude )
 		self._CHORD_RATIO_0 = chord_ratio(0)
@@ -38,7 +39,7 @@ class PowerBalance:
 		thrust = lift / self._LD_RATIO
 		# wing motion	
 		vel     = np.sqrt( 2 * lift / ( air_density * area * cy_av ) )
-		radius  = np.sqrt(area * self._CONST_SPAN)
+		radius  = np.sqrt( self._CONST_SPAN * (area * 0.5) )
 		ang_vel = self._ADV_RATIO * vel / radius
 		chord   = self._CHORD_RATIO_0 * radius * 2 
 		# inertia loss
@@ -51,7 +52,7 @@ class PowerBalance:
 		# power draw
 		power_min      = thrust * vel
 		power_inertial = inertia * freq * ang_vel**2 
-		power_aerodyn  = 2 * (torque_max - torque_glide) * ang_vel
+		power_aerodyn  = 2 * (torque_max - torque_glide) * ang_vel	# total torque for two wings
 		power_mech     = power_inertial + power_aerodyn
 		# efficiencies
 		eff_aero = power_min / power_aerodyn
@@ -74,40 +75,44 @@ class PowerBalance:
 		         ,'pitch_trim_angle' : self._PITCH_TRIM}
 		return output
 		
-	def _motorPower(self, power_out, vin, istall, kv, throttle, freq_wing, io=0, rm=0):
+	def _motorPower(self, power, vin, istall, kv, freq_wing, i_noload=0):
 		# max available power
-		power_max_abs = vin * istall * 0.25	
-		# modulate speed and torque 	
-		vin *= throttle
-		istall *= throttle
-		# loading factors
-		power_max = vin * istall * 0.25
-		cp = power_out / power_max
-		cw = 0.5 + 0.5*np.sqrt(1 - cp)
+		power_max = vin * istall * 0.25	
+		
+		# loading factors		
+		cp = power / power_max					# power ratio
+		if cp > 1:
+			cw = 0.5
+			print("WARNING: Insufficient power to maintain level flight \n")
+		else:
+			cw = 0.5 + 0.5*np.sqrt(1 - cp)		# angular velocity
+			
 		# electrical power
 		iload     = istall*(1 - cw)
-		power_in  = cp*power_max + io*vin + rm*iload**2
+		resistor  = vin / istall
+		power_in  = power + i_noload*vin + resistor*iload**2
 		imotor    = power_in / vin
-		eff_motor = power_out / power_in
+		eff_motor = power / power_in
  		# motor speed 
 		freq_max   = vin * kv / 60		
 		freq_motor = freq_max * cw
 		gear_ratio = freq_motor / freq_wing
 		
-		output = {'coeff_power'         : cp           \
+		output = {'resistance'          : resistor     \
+		         ,'coeff_power'         : cp           \
 		         ,'coeff_angvel'        : cw           \
 		         ,'efficiency_motor'    : eff_motor    \
 		         ,'power_electric_input': power_in     \
-		         ,'power_max_output'    : power_max_abs\
+		         ,'power_max_mechanical': power_max    \
 		         ,'current_motor'       : imotor       \
 		         ,'gear_ratio'          : gear_ratio}
 		return output	
 
-	def _climbPower(self, weight, vel, power_max, power_flight, power_inertia):
+	def _climbPower(self, weight, vel, power_max, power_flight, power_inertia): 
 		# power for thrust
-		power_thrust     = power_flight - power_inertia
-		power_thrust_new = power_max - power_inertia*(power_max/power_flight)**(3/2)	# constant amplitude
-		power_excess     = power_thrust_new - power_thrust
+			# constant amplitude, higher frequency -> higher inertial loss
+		power_inertia_change = power_inertia*( (power_max/power_flight)**(3/2) - 1 )	
+		power_excess = power_max - (power_flight + power_inertia_change)
 		# climb rate			
 		climb_rate  = power_excess / weight			
 		climb_angle = np.arcsin(climb_rate / vel)
@@ -175,8 +180,8 @@ class PowerBalance:
 
 	def solveDesign(self, xoffset, yoffset      , lever_spring,                    \
 	                      gravity, mass_total   , mass_wing   , air_density, area, \
-	                      voltage, current_stall, motor_kv    , throttle   ,       \
-	                      current_noload=None   , resistance=None):
+	                      voltage, current_stall, motor_kv    ,                    \
+	                      current_noload=None   ):
 	
 		flight = self._flightPower( gravity     \
 		                          , mass_total  \
@@ -188,15 +193,13 @@ class PowerBalance:
 		                        , voltage                    \
 		                        , current_stall              \
 		                        , motor_kv                   \
-		                        , throttle                   \
 		                        , flight['frequency']        \
-		                        , current_noload             \
-		                        , resistance )
+		                        , current_noload             )
 
-		climb = self._climbPower( flight['force_lift']       \
-		                        , flight['velocity']         \
-		                        , motor['power_max_output']  \
-		                        , flight['power_mechanical'] \
+		climb = self._climbPower( flight['force_lift']          \
+		                        , flight['velocity']            \
+		                        , motor['power_max_mechanical'] \
+		                        , flight['power_mechanical']    \
 		                        , flight['power_inertial'] )
 		
 		spring = self._springBias( xoffset                \

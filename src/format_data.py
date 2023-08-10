@@ -19,19 +19,19 @@ FORMAT_ROW      = ('{:' + '%d' + '}{:' + '%d' + '}{:' + '%d' + '}') % (N_NAME, N
 
 UNIT_OUTPUT = {'FLIGHT': ['W', 'W', 'W', 'W', '%', '%', 'm', 'm', 'hz'\
                          ,'m/s', 'N.m', 'N.m', 'N', 'N', 'deg']       \
-              ,'MOTOR' : ['%', '%', '%', 'W', 'W', 'A', '%']          \
+              ,'MOTOR' : ['ohm', '%', '%', '%', 'W', 'W', 'A', '%']   \
               ,'CLIMB' : ['m/s', 'deg']                               \
               ,'SPRING': ['N/m', 'N', 'm', 'deg'] }
 
 UNIT_INPUT = {'FLIGHT': ['%', 'deg', 'deg', 'm/s^2', 'kg', 'kg', 'kg/m^3', 'm^2'] \
-             ,'MOTOR' : ['V', 'A', 'A', 'ohm', 'rpm/V', '%']                      \
+             ,'MOTOR' : ['V', 'A', 'A', 'rpm/V']                                  \
              ,'SPRING': ['m', 'm', 'm'] }
 
 #---- functions ------
 
 def labelInputs(n_step,   chord_ratio, twist_glide, twist_up, twist_down                               \
                ,ld_ratio, amplitude,   dihedral,    gravity,  mass_total, mass_wing, air_density, area \
-               ,voltage,  i_stall,     i_noload,    motor_rm, motor_kv,   throttle                     \
+               ,voltage,  i_stall,     i_noload,    motor_kv                             			   \
                ,xoffset,  yoffset,     rspring):
     # create dict               
 	input = {}	
@@ -56,9 +56,7 @@ def labelInputs(n_step,   chord_ratio, twist_glide, twist_up, twist_down        
 	     	 'voltage'         : voltage     \
 	    	,'current_stall'   : i_stall     \
 	    	,'current_noload'  : i_noload    \
-	    	,'motor_resistance': motor_rm	 \
-	    	,'motor_kv'        : motor_kv    \
-	    	,'throttle'        : throttle    }
+	    	,'motor_kv'        : motor_kv    }
 	
 	input['SPRING'] = {                      \
 	     	 'xoffset'         : xoffset     \
@@ -89,9 +87,7 @@ def aircraftCalculations(wing, flight, motor, spring):
 	        , motor['voltage']        \
 	        , motor['current_stall']  \
 	        , motor['motor_kv']       \
-	        , motor['throttle']       \
-	        , motor['current_noload'] \
-	        , motor['motor_resistance'] )
+	        , motor['current_noload'] )
 	
 	output = {'FLIGHT'      : data[0] \
 	         ,'MOTOR'       : data[1] \
