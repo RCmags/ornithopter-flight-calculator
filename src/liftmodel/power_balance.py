@@ -82,7 +82,9 @@ class PowerBalance:
 		# loading factors		
 		cp = power / power_max					# power ratio
 		if cp > 1:
+			cp = 1								# saturation 
 			cw = 0.5
+			power = power_max
 			print("WARNING: Insufficient power to maintain level flight \n")
 		else:
 			cw = 0.5 + 0.5*np.sqrt(1 - cp)		# angular velocity
@@ -108,17 +110,20 @@ class PowerBalance:
 		         ,'gear_ratio'          : gear_ratio}
 		return output	
 
-	def _climbPower(self, weight, vel, power_max, power_flight, power_inertia): 
-		# power for thrust
-			# constant amplitude, higher frequency -> higher inertial loss
-		power_inertia_change = power_inertia*( (power_max/power_flight)**(3/2) - 1 )	
-		power_excess = power_max - (power_flight + power_inertia_change)
+	def _climbPower(self, weight, vel, power_max, power_min, power_aero, power_mech, power_inertial): 
+		# update inertial loss
+		eff_mech = power_min / ( power_aero + power_inertial*( power_max / power_mech )**(3/2) )
+												# greater loss with more frequency
+		
+		# effective excess power	
+		power_excess = power_max*eff_mech - power_min
+		
 		# climb rate			
 		climb_rate  = power_excess / weight			
 		climb_angle = np.arcsin(climb_rate / vel)
 				
-		output = {'climb_rate' : climb_rate \
-		         ,'climb_angle': climb_angle} 
+		output = {'climb_rate' : climb_rate  \
+		         ,'climb_angle': climb_angle } 
 		return output
 
 	def _geometry(self, x, y, ro, ang):
@@ -199,8 +204,10 @@ class PowerBalance:
 		climb = self._climbPower( flight['force_lift']          \
 		                        , flight['velocity']            \
 		                        , motor['power_max_mechanical'] \
+		                        , flight['power_minimum']       \
+		                        , flight['power_aerodynamic']   \
 		                        , flight['power_mechanical']    \
-		                        , flight['power_inertial'] )
+		                        , flight['power_inertial']      )
 		
 		spring = self._springBias( xoffset                \
 		                         , yoffset                \

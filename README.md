@@ -1,4 +1,4 @@
-# Ornithopter flight calculator - v1.2
+# Ornithopter flight calculator - v1.3
 
 This program calculates various flight parameters for an ornithopter in level flight. The aircraft is modeled as a single set of wings that generate a certain amount of lift and thrust. We estimate the mechanical power required for flight and the electrical power drawn by an electric motor. The lift during gliding flight is also used to estimate the strength of a spring needed to keep the wings from collapsing.
 
@@ -53,9 +53,7 @@ MOTOR
 voltage               11.100         V    
 current_stall         6.000          A    
 current_noload        0.500          A    
-motor_resistance      0.010          ohm  
 motor_kv              3100.000       rpm/V
-throttle              1.000          %    
 
 SPRING                                    
 ------------------------------------------
@@ -86,25 +84,26 @@ pitch_trim_angle      0.264          deg
 
 MOTOR                                     
 ------------------------------------------
+resistance            1.850          ohm  
 coeff_power           0.742          %    
 coeff_angvel          0.754          %    
-efficiency_motor      0.689          %    
-power_electric_input  17.933         W    
-power_max_output      16.650         W    
-current_motor         1.616          A    
+efficiency_motor      0.563          %    
+power_electric_input  21.948         W    
+power_max_mechanical  16.650         W    
+current_motor         1.977          A    
 gear_ratio            72.071         %    
 
 CLIMB                                     
 ------------------------------------------
-climb_rate            0.652          m/s  
-climb_angle           3.842          deg  
+climb_rate            0.316          m/s  
+climb_angle           1.865          deg  
 
 SPRING                                    
 ------------------------------------------
 spring_constant       411.314        N/m  
 spring_force          8.615          N    
 length_change         0.037          m    
-spring_angle          56.389         deg
+spring_angle          56.389         deg 
 ```
 
 ![image](https://raw.githubusercontent.com/RCmags/rcmags.github.io/main/img/orni_calculator/lift_distribution.png)

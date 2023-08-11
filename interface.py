@@ -4,7 +4,10 @@ import numpy as np
 # module
 from src.format_data import formatData
 
-# NOTE: Maintain variable names when modifying parameters/functions
+# NOTE: 
+# 1. Maintain variable names when modifying parameters/functions
+# 2. Oscillating servos are very inefficient. Divide total stall current by 4 to mimick loss in effective power.
+#		I_stall_servos ~ sum(I_servo1 + Iservo2...) / 4
 
 # =========== wing twist functions ===========
                                                         # units     # description:
